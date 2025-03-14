@@ -1,0 +1,70 @@
+
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JSON Tasks</title>
+</head>
+<body>
+    <h2>JSON Tasks</h2>
+
+    <h3>a) Convert JSON text to JS Object</h3>
+    <textarea id="jsonText1">{"name":"John","age":30,"city":"New York"}</textarea>
+    <button onclick="convertJSONToObject()">Convert</button>
+    <pre id="jsObject"></pre>
+
+    <h3>b) Convert JSON to Date</h3>
+    <textarea id="jsonDate">{"date":"2022-07-25T14:30:00.000Z"}</textarea>
+    <button onclick="convertJSONToDate()">Convert</button>
+    <pre id="dateObject"></pre>
+
+    <h3>c) Convert JSON to CSV / CSV to JSON</h3>
+    <textarea id="jsonToCSV">[{"name":"John","age":30,"city":"New York"},{"name":"Jane","age":25,"city":"London"}]</textarea>
+    <button onclick="convertJSONToCSV()">To CSV</button>
+    <pre id="csvString"></pre>
+
+    <textarea id="csvToJSON">John,30,New York\nJane,25,London</textarea>
+    <button onclick="convertCSVToJSON()">To JSON</button>
+    <pre id="jsonFromCSV"></pre>
+
+    <h3>d) Create Hash</h3>
+    <textarea id="hashString">Hello World</textarea>
+    <button onclick="createHash()">Create</button>
+    <pre id="hashedString"></pre>
+
+    <script>
+        function convertJSONToObject() {
+            const jsonObject = JSON.parse(document.getElementById('jsonText1').value);
+            document.getElementById('jsObject').textContent = JSON.stringify(jsonObject, null, 2);
+        }
+
+        function convertJSONToDate() {
+            const jsonObject = JSON.parse(document.getElementById('jsonDate').value);
+            document.getElementById('dateObject').textContent = new Date(jsonObject.date).toString();
+        }
+
+        function convertJSONToCSV() {
+            const jsonObject = JSON.parse(document.getElementById('jsonToCSV').value);
+            const csvString = jsonObject.map(obj => `${obj.name},${obj.age},${obj.city}`).join('\n');
+            document.getElementById('csvString').textContent = csvString;
+        }
+
+        function convertCSVToJSON() {
+            const csvString = document.getElementById('csvToJSON').value;
+            const jsonObject = csvString.split('\n').map(row => {
+                const [name, age, city] = row.split(',');
+                return { name, age: parseInt(age), city };
+            });
+            document.getElementById('jsonFromCSV').textContent = JSON.stringify(jsonObject, null, 2);
+        }
+
+        async function createHash() {
+            const hashString = document.getElementById('hashString').value;
+            const buffer = new TextEncoder().encode(hashString);
+            const hash = await crypto.subtle.digest('SHA-256', buffer);
+            const hexString = Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+            document.getElementById('hashedString').textContent = hexString;
+        }
+    </script>
+</body>
+</html>

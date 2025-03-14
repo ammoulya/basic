@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>calculator</title>
+    <style>
+        input{
+            width:100%;
+            padding:10px;
+        }
+    </style>
+</head>
+<body>
+    <lable>number1</lable>
+    <input id="num1" placeholder="enter number1">
+    <lable>number1</lable>
+    <input id="num2" placeholder="enter number2">
+    <lable>number1</lable>
+    <select id="operator">
+        <option id="+">+</option>
+        <option id="-">-</option>
+        <option id="*">*</option>
+        <option id="/">/</option>
+        <option id="sqrt">sqrt</option>
+        <option id="^">power</option>
+    </select>
+    <button id="cal">calculate</button>
+    <p id="result"></p>
+
+    <script>
+        document.getElementById('cal').addEventListener("click",function(event){
+            event.preventDefault();
+            var num1=parseFloat(document.getElementById('num1').value);
+            var num2=parseFloat(document.getElementById('num2').value);
+            var operator=document.getElementById('operator').value;
+            var result=0;
+
+            switch(operator){
+                case "+":result=num1+num2;
+                break;
+                case "-":result=num1-num2;
+                break;
+                case "*":result=num1*num2;
+                break;
+                case "/":result=num1/num2;
+                break;
+                case "sqrt":result=Math.sqrt(num1);
+                break;
+                case "power":result=Math.pow(num1,num2);
+                break;
+            }
+            document.getElementById('result').innerHTML=result;
+
+        });
+       
+    </script>
+</body>
+</html>
